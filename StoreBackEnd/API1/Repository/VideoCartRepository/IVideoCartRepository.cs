@@ -9,6 +9,6 @@ namespace API1.Repository.VideoCartRepository
     {
         Task<VideoCart> GetVideoCart(int id);
         Task<List<VideoCart>> GetAllVideoCarts();
-        Task<List<VideoCart>> GetVideoCartsByCategory(string category);
+        
     }
 }

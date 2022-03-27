@@ -14,26 +14,18 @@ namespace API1.Repository.AdminVideoCartRepository
         {
             _context = context;
         }
-        public async Task<bool> RemoveVideocartCartById(int id)
+        public async Task<bool> RemoveVideocartCart(int id)
         {
-            var videoCart = _context.Videocarts.Find(id);
+            var videoCart = await _context.Videocarts.FindAsync(id);
             if (videoCart != null)
             {
                 _context.Videocarts.Remove(videoCart);
                 await SaveChanges();
+                
                 return true;
             }
             return false;
 
-        }
-        public async Task<bool> RemoveVideocartCart(VideoCart videoCart)
-        {
-             //var succes = 
-                _context.Videocarts.Remove(videoCart);
-            //succes.State.ToString();
-            await SaveChanges();
-            return true;
-            //try
         }
         public async Task<bool> AddVideoCart(VideoCartViewModel videoCart)
         {

@@ -71,6 +71,15 @@ namespace RefreshJWTToken
 				};
 			});
 			services.AddControllers();
+			services.AddCors(options =>
+			{
+				options.AddPolicy("AllowAll", policy =>
+				{
+					policy.AllowAnyHeader();
+					policy.AllowAnyMethod();
+					policy.AllowAnyOrigin();
+				});
+			});
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "BasicJWTAuth", Version = "v1" });
@@ -89,10 +98,12 @@ namespace RefreshJWTToken
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RefreshJWTToken v1"));
             }
-
-            app.UseHttpsRedirection();
+			
+			app.UseHttpsRedirection();
 
 			app.UseRouting();
+			app.UseCors("AllowAll");
+
 			app.UseAuthentication(); // This need to be added before UseAuthorization()	
 			app.UseAuthorization();
 			app.UseEndpoints(endpoints =>

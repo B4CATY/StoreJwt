@@ -22,17 +22,12 @@ namespace API1.Repository.VideoCartRepository
             return carts;
         }
 
-        public Task<VideoCart> GetVideoCart(int id)
+        public async Task<VideoCart> GetVideoCart(int id)
         {
-            var videoCart = _context.Videocarts.Include(s => s.Category).FirstOrDefaultAsync(s => s.Id == id);
+            var videoCart = await _context.Videocarts.Include(s => s.Category).FirstOrDefaultAsync(s => s.Id == id);
             return videoCart;
         }
 
-        public async Task<List<VideoCart>> GetVideoCartsByCategory(string category)
-        {
-            var carts = await _context.Videocarts.Include(s=> s.Category.Name == category).ToListAsync();
-            return carts;
-        }
         public async Task<int> SaveChanges()
         {
             return await _context.SaveChangesAsync();

@@ -1,5 +1,7 @@
 using API1.Data;
+using API1.Repository.AdminCategoryRepository;
 using API1.Repository.AdminVideoCartRepository;
+using API1.Repository.CategoryRepository;
 using API1.Repository.VideoCartRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,9 +30,11 @@ namespace API1
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve); ;
-           
+            services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions
+                .ReferenceHandler = ReferenceHandler.Preserve);
+            
+
+
 
             services.AddCors(options =>
             {
@@ -43,7 +47,9 @@ namespace API1
             });
             //services.AddMediatR(typeof(Startup).Assembly);
             services.AddScoped<IVideoCartRepository, VideoCartRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IAdminVideoCartRepository, AdminVideoCartRepository>();
+            services.AddScoped<IAdminCategoryRepository, AdminCategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,11 +60,11 @@ namespace API1
                 app.UseDeveloperExceptionPage();
             }
             app.UseHttpsRedirection();
-            app.UseCors("AllowAll");
+            
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors("AllowAll");
             /* app.UseAuthentication();
              app.UseAuthorization();*/
 

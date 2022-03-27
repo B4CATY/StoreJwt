@@ -6,9 +6,9 @@ namespace API1.Repository.AdminVideoCartRepository
 {
     public interface IAdminVideoCartRepository : ISaveChanges
     {
-        Task<bool> RemoveVideocartCartById(int id);
-        Task<bool> RemoveVideocartCart(VideoCart videoCart);
+        Task<bool> RemoveVideocartCart(int id);
         Task<bool> AddVideoCart(VideoCartViewModel videoCart);
+        Task<bool> UpdateVideoCart(VideoCartViewModel videoCart);
         Category FindCategory(string name);
     }
 }
